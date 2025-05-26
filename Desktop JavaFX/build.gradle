@@ -1,0 +1,96 @@
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.14'
+    id 'com.github.johnrengelman.shadow' version '7.0.0'
+}
+
+repositories {
+    mavenCentral()
+    google()
+}
+
+javafx {
+    version = "23.0.2"
+    modules = ['javafx.base', 'javafx.controls', 'javafx.fxml', 'javafx.graphics', 'javafx.media', 'javafx.swing', 'javafx.web']
+}
+
+
+tasks.withType(JavaExec).configureEach {
+    jvmArgs += [
+            '--add-opens', 'javafx.graphics/javafx.scene=ALL-UNNAMED',
+            '--add-opens', 'javafx.controls/javafx.scene.control.skin=ALL-UNNAMED'
+    ]
+}
+
+dependencies {
+    implementation 'com.google.code.gson:gson:2.8.9'
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:3.1.0'
+    implementation 'org.slf4j:slf4j-api:2.0.0-alpha0'
+    implementation 'ch.qos.logback:logback-classic:1.4.12'
+    implementation 'org.json:json:20210307'
+    implementation 'org.controlsfx:controlsfx:11.2.0'
+    implementation 'com.jfoenix:jfoenix:9.0.10'
+    implementation 'org.jfree:jfreechart:1.5.3'
+
+    // Agregar las dependencias de JavaFX
+    implementation 'org.openjfx:javafx-base:23.0.2'
+    implementation 'org.openjfx:javafx-controls:23.0.2'
+    implementation 'org.openjfx:javafx-fxml:23.0.2'
+    implementation 'org.openjfx:javafx-graphics:23.0.2'
+    implementation 'org.openjfx:javafx-media:23.0.2'
+    implementation 'org.openjfx:javafx-swing:23.0.2'
+    implementation 'org.openjfx:javafx-web:23.0.2'
+}
+
+
+application {
+    mainClass = 'ej.Main'
+    applicationDefaultJvmArgs = [
+            '--add-opens=javafx.graphics/javafx.scene=ALL-UNNAMED',
+            '--add-exports=javafx.base/com.sun.javafx.event=ALL-UNNAMED'
+    ]
+}
+
+
+sourceSets {
+    main {
+        resources {
+            srcDirs = ["src/main/java", "src/main/resources"]
+            includes = ["**/*.fxml", "**/*.css", "**/*.png", "**/*.html"]
+        }
+    }
+}
+
+run {
+    jvmArgs = [
+            '--module-path', configurations.runtimeClasspath.asPath,
+            '--add-modules', 'javafx.base,javafx.controls,javafx.fxml,javafx.swing',
+            '--add-opens', 'javafx.graphics/javafx.scene=ALL-UNNAMED',
+            '--add-exports=javafx.base/com.sun.javafx.event=ALL-UNNAMED'
+
+    ]
+}
+
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes(
+                'Main-Class': 'ej.Main'  // Ensure this is the correct main class
+        )
+    }
+}
+
+shadowJar {
+    archiveBaseName.set('javafx-escolaVision')
+    archiveVersion.set('1.0')
+    archiveClassifier.set('') // Asegura que el JAR generado sea el principal
+    manifest {
+        attributes(
+                'Main-Class': 'ej.Main'
+        )
+    }
+    mergeServiceFiles()
+}
+

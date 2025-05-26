@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+
+<StackPane fx:id="miStackPane" maxHeight="Infinity" maxWidth="Infinity" prefHeight="1200.0" prefWidth="1920.0" 
+    stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" 
+    fx:controller="ej.miControlador" styleClass="main-background">
+    
+    <VBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity" spacing="10">
+        <!-- Header -->
+        <HBox fx:id="hbHeader" alignment="CENTER_LEFT" maxHeight="Infinity" maxWidth="Infinity" 
+            prefHeight="70.0" prefWidth="808.0" spacing="10" styleClass="header-background">
+            <VBox.margin>
+                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+            </VBox.margin>
+
+            <Button fx:id="btnLogo" onAction="#mostrarMenu" styleClass="logo-button" HBox.hgrow="NEVER">
+                <graphic>
+                    <ImageView fx:id="imglogo" fitHeight="50.0" fitWidth="50.0" preserveRatio="true">
+                        <Image url="@../../resources/escolavision.png" />
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Label fx:id="lblEscolavisionDesktop" alignment="CENTER" contentDisplay="CENTER" 
+                text="EscolaVision Desktop" styleClass="header-title" HBox.hgrow="ALWAYS">
+                <font>
+                    <Font name="System Bold" size="28.0" />
+                </font>
+                <HBox.margin>
+                    <Insets left="20.0" />
+                </HBox.margin>
+            </Label>
+        </HBox>
+
+        <!-- Main Content -->
+        <TabPane fx:id="tabPane" stylesheets="@../../styles/styles.css" VBox.vgrow="ALWAYS" styleClass="modern-tab-pane">
+            <!-- Login Tab -->
+            <Tab fx:id="tabHome" closable="false" text="EscolaVision" styleClass="modern-tab">
+                <StackPane styleClass="tab-content">
+                    <HBox alignment="CENTER" spacing="40">
+                        <ImageView fx:id="imglogo" fitHeight="400.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
+                            <Image url="@../../resources/escolavision.png" />
+                        </ImageView>
+                        <VBox alignment="CENTER" spacing="20" styleClass="login-form">
+                            <Label text="Bienvenido a EscolaVision" styleClass="welcome-label">
+                                <font>
+                                    <Font size="24.0" />
+                                </font>
+                            </Label>
+                            <TextField fx:id="txtUser" promptText="Email/DNI" styleClass="modern-textfield" />
+                            <PasswordField fx:id="txtPassword" promptText="Contraseña" styleClass="modern-textfield" />
+                            <Label fx:id="lblRegister" text="¿No tienes cuenta? Regístrate aquí"
+                                styleClass="link-label" onMouseClicked="#handleRegister" />
+                            <Button fx:id="btnLogin" text="INICIAR SESIÓN" styleClass="primary-button">
+                                <graphic>
+                                    <ImageView fx:id="imgViewlogIn" fitHeight="20.0" fitWidth="20.0" />
+                                </graphic>
+                            </Button>
+                        </VBox>
+                    </HBox>
+                </StackPane>
+            </Tab>
+
+            <!-- Test Tab -->
+            <Tab fx:id="tabTest" closable="false" text="Test" styleClass="modern-tab">
+                <StackPane styleClass="tab-content">
+                    <BorderPane>
+                        <left>
+                            <VBox spacing="10" styleClass="sidebar">
+                                <Label text="Tests disponibles" styleClass="section-title" />
+                                <ListView fx:id="listViewTest" VBox.vgrow="ALWAYS" styleClass="modern-listview" />
+                            </VBox>
+                        </left>
+                        <center>
+                            <VBox spacing="20" styleClass="content-area">
+                                <Label text="Datos del test" styleClass="section-title" />
+                                <GridPane hgap="20" vgap="15">
+                                    <Label text="ID:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                    <TextField fx:id="txtIdTest" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                    
+                                    <Label text="Nombre:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                    <TextArea fx:id="txtTestName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    
+                                    <Label text="Visibilidad:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                    <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                        <Button fx:id="btnVisibleYes" text="Sí" styleClass="toggle-button" />
+                                        <Button fx:id="btnVisibleNo" text="No" styleClass="toggle-button" />
+                                    </HBox>
+                                </GridPane>
+                            </VBox>
+                        </center>
+                        <bottom>
+                            <HBox alignment="CENTER" spacing="20" styleClass="button-bar">
+                                <Button fx:id="btnClearTest" text="Nuevo" styleClass="secondary-button">
+                                    <graphic>
+                                        <ImageView fx:id="imgClearTest" fitHeight="20.0" fitWidth="20.0" />
+                                    </graphic>
+                                </Button>
+                                <Button fx:id="btnDelTest" text="Eliminar" styleClass="danger-button">
+                                    <graphic>
+                                        <ImageView fx:id="imgDelTest" fitHeight="20.0" fitWidth="20.0" />
+                                    </graphic>
+                                </Button>
+                                <Button fx:id="btnSaveTest" text="Guardar" styleClass="primary-button">
+                                    <graphic>
+                                        <ImageView fx:id="imgSaveTest" fitHeight="20.0" fitWidth="20.0" />
+                                    </graphic>
+                                </Button>
+                            </HBox>
+                        </bottom>
+                    </BorderPane>
+                </StackPane>
+            </Tab>
+
+            <!-- Questions Tab -->
+            <Tab fx:id="tabQuest" closable="false" text="Preguntas" styleClass="modern-tab">
+                <StackPane styleClass="tab-content">
+                    <BorderPane>
+                        <left>
+                            <VBox spacing="10" styleClass="sidebar">
+                                <Label text="Preguntas disponibles" styleClass="section-title" />
+                                <ListView fx:id="listViewPreguntas" VBox.vgrow="ALWAYS" styleClass="modern-listview" />
+                            </VBox>
+                        </left>
+                        <center>
+                            <VBox spacing="20" styleClass="content-area">
+                                <Label text="Datos de la pregunta" styleClass="section-title" />
+                                <GridPane hgap="20" vgap="15">
+                                    <Label text="ID:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                    <TextField fx:id="txtIdQuest" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                    
+                                    <Label text="Título:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                    <TextField fx:id="txtTituloQuest" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    
+                                    <Label text="Enunciado:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                    <TextArea fx:id="txtEnunQuest" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    
+                                    <Label text="Test:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                    <ComboBox fx:id="txtTestQuest" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                </GridPane>
+                            </VBox>
+                        </center>
+                        <bottom>
+                            <HBox alignment="CENTER" spacing="20" styleClass="button-bar">
+                                <Button fx:id="btnClearQuest" text="Nuevo" styleClass="secondary-button">
+                                    <graphic>
+                                        <ImageView fx:id="imgClearQuest" fitHeight="20.0" fitWidth="20.0" />
+                                    </graphic>
+                                </Button>
+                                <Button fx:id="btnDelQuest" text="Eliminar" styleClass="danger-button">
+                                    <graphic>
+                                        <ImageView fx:id="imgDelQuest" fitHeight="20.0" fitWidth="20.0" />
+                                    </graphic>
+                                </Button>
+                                <Button fx:id="btnSaveQuest" text="Guardar" styleClass="primary-button">
+                                    <graphic>
+                                        <ImageView fx:id="imgSaveQuest" fitHeight="20.0" fitWidth="20.0" />
+                                    </graphic>
+                                </Button>
+                            </HBox>
+                        </bottom>
+                    </BorderPane>
+                </StackPane>
+            </Tab>
+
+            <!-- Users Tab -->
+            <Tab fx:id="tabAlum" closable="false" text="Usuarios" styleClass="modern-tab">
+                <StackPane styleClass="tab-content">
+                    <BorderPane>
+                        <left>
+                            <VBox spacing="10" styleClass="sidebar">
+                                <Label text="Usuarios registrados" styleClass="section-title" />
+                                <ListView fx:id="listViewAlumnos" VBox.vgrow="ALWAYS" styleClass="modern-listview" />
+                            </VBox>
+                        </left>
+                        <center>
+                            <VBox spacing="20" styleClass="content-area">
+                                <Label text="Datos del usuario" styleClass="section-title" />
+                                <HBox spacing="40">
+                                    <VBox spacing="15">
+                                        <GridPane hgap="20" vgap="15">
+                                            <Label text="ID:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                            <TextField fx:id="txtIdAlm" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                            
+                                            <Label text="Nombre:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                            <TextField fx:id="txtNameAlm" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                            
+                                            <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                            <TextField fx:id="txtSurnameAlm" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                            
+                                            <Label text="DNI:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                            <TextField fx:id="txtDNIAlm" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                            
+                                            <Label text="Contraseña:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                                            <PasswordField fx:id="txtPasswordAlm" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                            
+                                            <Label text="Año Nacimiento:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                                            <TextField fx:id="txtAñoNacimiento" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                        </GridPane>
+                                    </VBox>
+                                    <VBox alignment="CENTER" spacing="20">
+                                        <Label text="Foto de perfil" styleClass="section-title" />
+                                        <StackPane fx:id="imageWrapper" styleClass="image-container">
+                                            <ImageView fx:id="imgViewPicAlum" fitHeight="200.0" fitWidth="200.0" 
+                                                preserveRatio="true" styleClass="profile-image" />
+                                        </StackPane>
+                                    </VBox>
+                                </HBox>
+                            </VBox>
+                        </center>
+                        <bottom>
+                            <HBox alignment="CENTER" spacing="20" styleClass="button-bar">
+                                <Button fx:id="btnClearAlum" text="Nuevo" styleClass="secondary-button">
+                                    <graphic>
+                                        <ImageView fx:id="imgClearAlum" fitHeight="20.0" fitWidth="20.0" />
+                                    </graphic>
+                                </Button>
+                                <Button fx:id="btnDelAlum" text="Eliminar" styleClass="danger-button">
+                                    <graphic>
+                                        <ImageView fx:id="imgDelAlum" fitHeight="20.0" fitWidth="20.0" />
+                                    </graphic>
+                                </Button>
+                                <Button fx:id="btnSaveAlum" text="Guardar" styleClass="primary-button">
+                                    <graphic>
+                                        <ImageView fx:id="imgSaveAlum" fitHeight="20.0" fitWidth="20.0" />
+                                    </graphic>
+                                </Button>
+                            </HBox>
+                        </bottom>
+                    </BorderPane>
+                </StackPane>
+            </Tab>
+
+            <!-- Area Tab -->
+            <Tab fx:id="tabAr" closable="false" text="Área" styleClass="modern-tab">
+                <StackPane styleClass="tab-content">
+                    <BorderPane>
+                        <left>
+                            <VBox spacing="10" styleClass="sidebar">
+                                <Label text="Áreas disponibles" styleClass="section-title" />
+                                <ListView fx:id="listViewArea" VBox.vgrow="ALWAYS" styleClass="modern-listview" />
+                            </VBox>
+                        </left>
+                        <center>
+                            <VBox spacing="20" styleClass="content-area">
+                                <Label text="Datos del área" styleClass="section-title" />
+                                <HBox spacing="40">
+                                    <VBox spacing="15">
+                                        <GridPane hgap="20" vgap="15">
+                                            <Label text="ID:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                            <TextField fx:id="txtIdArea" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                            
+                                            <Label text="Nombre:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                            <TextField fx:id="txtNameArea" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                            
+                                            <Label text="Descripción:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                            <TextArea fx:id="txtDescripArea" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        </GridPane>
+                                    </VBox>
+                                    <VBox alignment="CENTER" spacing="20">
+                                        <Label text="Logo del área" styleClass="section-title" />
+                                        <StackPane fx:id="imageWrapper3" styleClass="image-container">
+                                            <ImageView fx:id="imgViewPicArea" fitHeight="200.0" fitWidth="200.0" 
+                                                preserveRatio="true" styleClass="profile-image" />
+                                        </StackPane>
+                                    </VBox>
+                                </HBox>
+                            </VBox>
+                        </center>
+                        <bottom>
+                            <HBox alignment="CENTER" spacing="20" styleClass="button-bar">
+                                <Button fx:id="btnClearArea" text="Nuevo" styleClass="secondary-button">
+                                    <graphic>
+                                        <ImageView fx:id="imgClearArea" fitHeight="20.0" fitWidth="20.0" />
+                                    </graphic>
+                                </Button>
+                                <Button fx:id="btnDelArea" text="Eliminar" styleClass="danger-button">
+                                    <graphic>
+                                        <ImageView fx:id="imgDelArea" fitHeight="20.0" fitWidth="20.0" />
+                                    </graphic>
+                                </Button>
+                                <Button fx:id="btnSaveArea" text="Guardar" styleClass="primary-button">
+                                    <graphic>
+                                        <ImageView fx:id="imgSaveArea" fitHeight="20.0" fitWidth="20.0" />
+                                    </graphic>
+                                </Button>
+                            </HBox>
+                        </bottom>
+                    </BorderPane>
+                </StackPane>
+            </Tab>
+
+            <!-- PxA Tab -->
+            <Tab fx:id="tabPxA" closable="false" text="Pregunta x Área" styleClass="modern-tab">
+                <StackPane styleClass="tab-content">
+                    <BorderPane>
+                        <left>
+                            <VBox spacing="10" styleClass="sidebar">
+                                <Label text="Áreas disponibles" styleClass="section-title" />
+                                <ListView fx:id="listViewPxa" VBox.vgrow="ALWAYS" styleClass="modern-listview" />
+                            </VBox>
+                        </left>
+                        <center>
+                            <VBox spacing="20" styleClass="content-area">
+                                <Label text="Datos de la relación" styleClass="section-title" />
+                                <GridPane hgap="20" vgap="15">
+                                    <Label text="ID:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                    <TextField fx:id="txtIdPxA" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                    
+                                    <Label text="Área:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                    <TextField fx:id="txtAreaPxA" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    
+                                    <Label text="Pregunta:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                    <TextField fx:id="txtQuestPxA" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    
+                                    <Label text="Enunciado:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                    <TextArea fx:id="txtEnumPxA" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                </GridPane>
+                            </VBox>
+                        </center>
+                        <right>
+                            <VBox spacing="10" styleClass="sidebar">
+                                <Label text="Preguntas por área" styleClass="section-title" />
+                                <ListView fx:id="listViewPxAPreguntas" VBox.vgrow="ALWAYS" styleClass="modern-listview" />
+                            </VBox>
+                        </right>
+                        <bottom>
+                            <HBox alignment="CENTER" spacing="20" styleClass="button-bar">
+                                <Button fx:id="btnClearPxA" text="Nuevo" styleClass="secondary-button">
+                                    <graphic>
+                                        <ImageView fx:id="imgClearPxA" fitHeight="20.0" fitWidth="20.0" />
+                                    </graphic>
+                                </Button>
+                                <Button fx:id="btnDelPxA" text="Eliminar" styleClass="danger-button">
+                                    <graphic>
+                                        <ImageView fx:id="imgDelPxA" fitHeight="20.0" fitWidth="20.0" />
+                                    </graphic>
+                                </Button>
+                                <Button fx:id="btnSavePxA" text="Guardar" styleClass="primary-button">
+                                    <graphic>
+                                        <ImageView fx:id="imgSavePxA" fitHeight="20.0" fitWidth="20.0" />
+                                    </graphic>
+                                </Button>
+                            </HBox>
+                        </bottom>
+                    </BorderPane>
+                </StackPane>
+            </Tab>
+
+            <!-- Attempts Tab -->
+            <Tab fx:id="tabTr" closable="false" text="Intentos" styleClass="modern-tab">
+                <StackPane styleClass="tab-content">
+                    <BorderPane>
+                        <left>
+                            <VBox spacing="10" styleClass="sidebar">
+                                <Label text="Intentos registrados" styleClass="section-title" />
+                                <ListView fx:id="listViewIntentos" VBox.vgrow="ALWAYS" styleClass="modern-listview" />
+                            </VBox>
+                        </left>
+                        <center>
+                            <VBox spacing="20" styleClass="content-area">
+                                <Label text="Datos del intento" styleClass="section-title" />
+                                <GridPane hgap="20" vgap="15">
+                                    <Label text="ID:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                    <TextField fx:id="txtIdTry" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                    
+                                    <Label text="Test:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                    <ComboBox fx:id="txtTestTry" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    
+                                    <Label text="Alumno:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                    <TextField fx:id="txtDNITry" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    
+                                    <Label text="Fecha:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                    <DatePicker fx:id="txtDateTry" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    
+                                    <Label text="Hora:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                                    <TextField fx:id="txtTimeTry" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    
+                                    <Label text="Resultado:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                                    <TextField fx:id="txtResTry" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                </GridPane>
+                            </VBox>
+                        </center>
+                        <bottom>
+                            <HBox alignment="CENTER" spacing="20" styleClass="button-bar">
+                                <Button fx:id="btnClearTry" text="Nuevo" styleClass="secondary-button">
+                                    <graphic>
+                                        <ImageView fx:id="imgClearTry" fitHeight="20.0" fitWidth="20.0" />
+                                    </graphic>
+                                </Button>
+                                <Button fx:id="btnDelTry" text="Eliminar" styleClass="danger-button">
+                                    <graphic>
+                                        <ImageView fx:id="imgDelTry" fitHeight="20.0" fitWidth="20.0" />
+                                    </graphic>
+                                </Button>
+                                <Button fx:id="btnSaveTry" text="Guardar" styleClass="primary-button">
+                                    <graphic>
+                                        <ImageView fx:id="imgSaveTry" fitHeight="20.0" fitWidth="20.0" />
+                                    </graphic>
+                                </Button>
+                            </HBox>
+                        </bottom>
+                    </BorderPane>
+                </StackPane>
+            </Tab>
+        </TabPane>
+    </VBox>
+    
+    <Button fx:id="btnHelp" styleClass="help-button" text="?" />
+</StackPane>

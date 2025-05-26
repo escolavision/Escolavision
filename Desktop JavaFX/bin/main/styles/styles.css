@@ -1,0 +1,125 @@
+.button {
+    -fx-background-color: #4A90E2;
+    -fx-text-fill: white;
+    -fx-padding: 1em 2em;
+    -fx-font-size: 1em; /* Usar em para hacer el tamaño de fuente relativo */
+    -fx-font-weight: bold;
+    -fx-background-radius: 0.3em;
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.15), 3, 0.0, 0, 1);
+}
+
+.button:hover {
+    -fx-background-color: #357ABD;
+}
+
+.link-label {
+    -fx-text-fill: #335b8a; /* Color azul similar al de los enlaces */
+    -fx-underline: true; /* Subrayado como un enlace */
+    -fx-cursor: hand; /* Cambia el cursor a una mano al pasar por encima */
+}
+
+.label {
+    -fx-text-fill: #2d2d2d;
+    -fx-font-size: 1.1em; /* Relativo */
+    -fx-font-weight: normal;
+}
+
+.text-field, .password-field, .combo-box, .text-area, .list-view {
+    -fx-font-size: 1em; /* Usar em */
+    -fx-padding: 0.5em;
+    -fx-background-color: white;
+    -fx-border-color: #2d2d2d;
+    -fx-border-width: 0.1em;
+    -fx-background-radius: 0.2em;
+}
+
+.tab-content {
+    -fx-background-color: #AED6F1;
+    -fx-padding: 1em;
+}
+
+.round-button {
+    -fx-background-radius: 50%;
+    -fx-min-width: 5em; /* Relativo */
+    -fx-min-height: 5em; /* Relativo */
+    -fx-max-width: 5em;
+    -fx-max-height: 5em;
+    -fx-background-image: url("/escolavision.png");
+    -fx-background-size: cover;
+}
+.rounded-button {
+    -fx-background-radius: 50%;
+    -fx-border-radius: 50%;
+}
+
+
+.round-button-help {
+    -fx-background-radius: 50%;
+    -fx-min-width: 4em;
+    -fx-min-height: 4em;
+    -fx-max-width: 4em;
+    -fx-max-height: 4em;
+}
+
+#miStackPane{
+    -fx-background-color: #DDDDDD;
+}
+
+.tab-pane .tab {
+    -fx-background-color: #4A90E2;
+    -fx-padding: 0.3em 0.6em;
+    -fx-background-radius: 0.5em 0.5em 0 0;
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: #357ABD;
+    -fx-font-weight: bold;
+}
+
+.tab-pane .tab .tab-label {
+    -fx-text-fill: white;
+}
+
+.tab-pane .tab:selected .tab-label {
+    -fx-text-fill: white;
+}
+
+#imageWrapper, #imageWrapper2, #imageWrapper3 {
+    -fx-border-color: #357ABD;
+    -fx-border-width: 0.3em;
+    -fx-padding: 0.5em;
+    -fx-background-color: white;
+}
+
+.combo-box {
+    -fx-font-size: 1em;
+    -fx-background-color: white;
+    -fx-border-color: #2d2d2d;
+    -fx-border-width: 0.1em;
+    -fx-background-radius: 0.2em;
+}
+
+.bold-label {
+    -fx-font-weight: bold;
+}
+
+#btnVisibleYes {
+    -fx-background-color: green;
+    -fx-text-fill: white;
+}
+
+#btnVisibleNo {
+    -fx-background-color: red;
+    -fx-text-fill: white;
+}
+
+#btnVisibleYes:disabled {
+    -fx-background-color: gray;
+    -fx-text-fill: black;
+}
+
+#btnVisibleNo:disabled {
+    -fx-background-color: gray;
+    -fx-text-fill: black;
+}
+

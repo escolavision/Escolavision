@@ -1,0 +1,34 @@
+{
+  "appId": "com.escolavision.app",
+  "productName": "EscolaVision",
+  "directories": {
+    "output": "dist"
+  },
+  "files": [
+    "dist/**/*",
+    "electron/**/*"
+  ],
+  "win": {
+    "target": [
+      "nsis"
+    ],
+    "icon": "dist/escolavision.png"
+  },
+  "mac": {
+    "target": [
+      "dmg"
+    ],
+    "icon": "dist/escolavision.png"
+  },
+  "linux": {
+    "target": [
+      "AppImage"
+    ],
+    "icon": "dist/escolavision.png"
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": true
+  }
+} 
