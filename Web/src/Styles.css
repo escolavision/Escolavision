@@ -1,0 +1,107 @@
+/* Colores */
+:root {
+    --primary-color: #4A90E2; /* Color principal */
+    --primary-hover: #357ABD; /* Hover para botones */
+    --secondary-color: #2C3E50; /* Texto principal */
+    --background-light: #AED6F1; /* Fondo de secciones */
+    --border-color: #BDC3C7; /* Color de bordes */
+    --white-color: #FFFFFF; /* Blanco puro */
+}
+
+*{
+    width: 100%;
+}
+
+#root{
+    background-color: #AED6F1;
+}
+/* Estilos generales */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #AED6F1;
+    color: var(--secondary-color);
+    margin: 0%;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    background-color: #AED6F1;
+    padding: 0%;
+    min-height: 87vh; /* Ocupar toda la altura de la pantalla */
+}
+
+.main-content{
+    flex: 1;
+    background-color: #AED6F1;
+    margin: auto;
+}
+
+.home-content{
+    width: 85%;
+    margin: auto;
+}
+
+h1 {
+    font-size: 2em;
+    line-height: 1.1;
+  }
+
+div{
+    font-size: 1em;
+    line-height: 1.6;
+}
+
+p{
+    font-size: 1em;
+    line-height: 1.6;
+}
+/* Botones */
+.button {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s ease-in-out;
+}
+
+.button:hover {
+    background-color: var(--primary-hover);
+}
+
+/* Pestañas */
+.tab-content {
+    background-color: var(--background-light);
+    padding: 20px;
+}
+
+.tab-pane .tab {
+    background-color: var(--primary-color);
+    padding: 10px 15px;
+    border-radius: 8px 8px 0 0;
+}
+
+.tab-pane .tab:hover {
+    background-color: var(--primary-hover);
+}
+
+.tab-pane .tab.selected {
+    background-color: var(--primary-hover);
+    font-weight: bold;
+}
+
+/* Footer */
+.footer {
+    position: absolute;
+    background-color: var(--primary-hover);
+    color: var(--white-color);
+    text-align: center;
+    width: 100%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
