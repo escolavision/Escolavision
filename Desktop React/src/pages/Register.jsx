@@ -24,7 +24,7 @@ const Register = () => {
     const [tipoUsuario, setTipoUsuario] = useState('alumno');
     const [isOrientador, setIsOrientador] = useState(false);
     const [dni, setDni] = useState('');
-    const [fechaNacimiento, setFechaNacimiento] = useState('');
+    const [añoNacimiento, setAñoNacimiento] = useState('');
     const [foto, setFoto] = useState(null);
 
     // UI state management
@@ -168,6 +168,15 @@ const Register = () => {
             return;
         }
 
+        // Validate year of birth
+        const currentYear = new Date().getFullYear();
+        const year = parseInt(añoNacimiento);
+        if (isNaN(year) || year < 1900 || year > currentYear) {
+            setError(idioma === "Inglés" ? 'Invalid year of birth' : 'Año de nacimiento inválido');
+            setLoading(false);
+            return;
+        }
+
         try {
             // Convert photo to Base64 if one was selected
             let fotoBase64 = foto ? await convertToBase64(foto) : '';
@@ -179,9 +188,9 @@ const Register = () => {
                 tipo_usuario: tipoUsuario === 'alumno' ? 1 : 2,
                 is_orientador: isOrientador ? 1 : 0,
                 dni: dni,
-                fecha_nacimiento: fechaNacimiento,
+                fecha_nacimiento: añoNacimiento,
                 foto: fotoBase64,
-                id_centro: centroSeleccionado, // Include selected center in data
+                id_centro: centroSeleccionado,
             };
             const body = JSON.stringify({
                 datos,
@@ -251,15 +260,19 @@ const Register = () => {
                         />
                     </div>
                     <div>
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="fecha_nacimiento">
-                            {idioma == "Inglés" && "Date of Birth" || idioma == "Español" && "Fecha de nacimiento"}
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="año_nacimiento">
+                            {idioma == "Inglés" && "Year of Birth" || idioma == "Español" && "Año de nacimiento"}
                         </label>
                         <input
-                            type="date"
-                            id="fecha_nacimiento"
-                            value={fechaNacimiento}
-                            onChange={(e) => setFechaNacimiento(e.target.value)}
+                            type="number"
+                            id="año_nacimiento"
+                            min="1900"
+                            max={new Date().getFullYear()}
+                            placeholder={idioma == "Inglés" && "Enter year of birth" || idioma == "Español" && "Introduce el año de nacimiento"}
+                            value={añoNacimiento}
+                            onChange={(e) => setAñoNacimiento(e.target.value)}
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            required
                         />
                     </div>
                     <div>

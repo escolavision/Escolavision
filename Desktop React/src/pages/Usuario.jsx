@@ -41,7 +41,7 @@ const Usuario = () => {
     email: '',
     dni: '',
     password: '',
-    fecha_nacimiento: '',
+    año_nacimiento: '',
     foto: '',
     tipo_usuario: ''
   });
@@ -111,7 +111,7 @@ const Usuario = () => {
       email: usuario.email || '',
       dni: usuario.dni || '',
       password: '',
-      fecha_nacimiento: usuario.fecha_nacimiento?.split(' ')[0] || '',
+      año_nacimiento: usuario.fecha_nacimiento?.split('-')[0] || '',
       foto: usuario.foto ? `data:image/jpeg;base64,${usuario.foto}` : '',
       tipo_usuario: usuario.tipo_usuario
     });
@@ -124,14 +124,14 @@ const Usuario = () => {
       email: '',
       dni: '',
       password: '',
-      fecha_nacimiento: '',
+      año_nacimiento: '',
       foto: '',
       tipo_usuario: ''
     });
   };
 
   const handleSave = async () => {
-    if (!userData.nombre.trim() || !userData.email.trim() || !userData.dni.trim() || !userData.fecha_nacimiento.trim() || (!userData.id && !userData.password.trim())) {
+    if (!userData.nombre.trim() || !userData.email.trim() || !userData.dni.trim() || !userData.año_nacimiento.trim() || (!userData.id && !userData.password.trim())) {
       showError(isEnglish ? "Please complete all required fields" : "Por favor complete todos los campos requeridos");
       return;
     }
@@ -145,7 +145,7 @@ const Usuario = () => {
         dni: userData.dni,
         contraseña: userData.password || undefined,
         foto: userData.foto ? userData.foto.split(',')[1] : '',
-        fecha_nacimiento: userData.fecha_nacimiento,
+        fecha_nacimiento: userData.año_nacimiento,
         tipo_usuario: userData.tipo_usuario === 'Alumno' ? 1 : 2,
         email: userData.email,
         id_centro: id_centro
@@ -275,27 +275,26 @@ const Usuario = () => {
     };
   };
 
-  // Bar chart data for user registration by month (if fecha_nacimiento is used as proxy)
+  // Bar chart data for user registration by year
   const getUserBirthBarData = () => {
-    // Agrupar usuarios por mes de nacimiento
-    const months = [
-      isEnglish ? 'Jan' : 'Ene', isEnglish ? 'Feb' : 'Feb', isEnglish ? 'Mar' : 'Mar', isEnglish ? 'Apr' : 'Abr',
-      isEnglish ? 'May' : 'May', isEnglish ? 'Jun' : 'Jun', isEnglish ? 'Jul' : 'Jul', isEnglish ? 'Aug' : 'Ago',
-      isEnglish ? 'Sep' : 'Sep', isEnglish ? 'Oct' : 'Oct', isEnglish ? 'Nov' : 'Nov', isEnglish ? 'Dec' : 'Dic',
-    ];
-    const monthCounts = Array(12).fill(0);
+    const currentYear = new Date().getFullYear();
+    const years = Array.from({length: 10}, (_, i) => currentYear - i).reverse();
+    const yearCounts = Array(10).fill(0);
+    
     usuarios.forEach(u => {
       if (u.fecha_nacimiento) {
-        const m = new Date(u.fecha_nacimiento).getMonth();
-        if (!isNaN(m)) monthCounts[m]++;
+        const year = parseInt(u.fecha_nacimiento.split('-')[0]);
+        const index = years.indexOf(year);
+        if (index !== -1) yearCounts[index]++;
       }
     });
+
     return {
-      labels: months,
+      labels: years,
       datasets: [
         {
-          label: isEnglish ? 'Users by Birth Month' : 'Usuarios por Mes de Nacimiento',
-          data: monthCounts,
+          label: isEnglish ? 'Users by Birth Year' : 'Usuarios por Año de Nacimiento',
+          data: yearCounts,
           backgroundColor: 'rgba(75, 192, 192, 0.6)',
           borderColor: 'rgb(75, 192, 192)',
           borderWidth: 1,
@@ -538,14 +537,17 @@ const Usuario = () => {
 
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        {isEnglish ? "Date of Birth" : "Fecha de Nacimiento"}
+                        {isEnglish ? "Year of Birth" : "Año de Nacimiento"}
                       </label>
                       <div className="relative">
                         <input
-                          type="date"
-                          value={userData.fecha_nacimiento}
-                          onChange={(e) => setUserData(prev => ({ ...prev, fecha_nacimiento: e.target.value }))}
+                          type="number"
+                          min="1900"
+                          max={new Date().getFullYear()}
+                          value={userData.año_nacimiento}
+                          onChange={(e) => setUserData(prev => ({ ...prev, año_nacimiento: e.target.value }))}
                           className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder={isEnglish ? "Enter year of birth" : "Introduce el año de nacimiento"}
                         />
                         <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
                       </div>
@@ -608,9 +610,9 @@ const Usuario = () => {
                 <div className="flex gap-4 mt-6">
                   <button
                     onClick={handleSave}
-                    disabled={!userData.nombre.trim() || !userData.email.trim() || !userData.dni.trim() || !userData.fecha_nacimiento.trim() || (!userData.id && !userData.password.trim()) || uiState.isSaved}
+                    disabled={!userData.nombre.trim() || !userData.email.trim() || !userData.dni.trim() || !userData.año_nacimiento.trim() || (!userData.id && !userData.password.trim()) || uiState.isSaved}
                     className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-white transition-colors duration-200
-                      ${!userData.nombre.trim() || !userData.email.trim() || !userData.dni.trim() || !userData.fecha_nacimiento.trim() || (!userData.id && !userData.password.trim()) || uiState.isSaved
+                      ${!userData.nombre.trim() || !userData.email.trim() || !userData.dni.trim() || !userData.año_nacimiento.trim() || (!userData.id && !userData.password.trim()) || uiState.isSaved
                         ? 'bg-blue-300 cursor-not-allowed'
                         : 'bg-blue-500 hover:bg-blue-600'}`}
                   >
@@ -697,7 +699,7 @@ const Usuario = () => {
                 </div>
                 <div className="bg-white rounded-xl shadow-md p-6">
                   <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                    {isEnglish ? "Users by Birth Month" : "Usuarios por Mes de Nacimiento"}
+                    {isEnglish ? "Users by Birth Year" : "Usuarios por Año de Nacimiento"}
                   </h3>
                   <div className="h-64">
                     <Bar data={getUserBirthBarData()} options={barChartOptions} />

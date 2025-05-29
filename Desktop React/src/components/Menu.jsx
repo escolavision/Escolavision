@@ -94,7 +94,8 @@ const Menu = () => {
     };
 
     const userType = isOrientador === "1" ? "Orientador" : tipo;
-    const currentConfig = config[userType][idioma];
+    const userConfig = config[userType] || config["Alumno"]; // Fallback seguro
+    const currentConfig = userConfig[idioma] || userConfig["Español"]; // Fallback seguro
     
     setMenuConfig(currentConfig);
     setActive(currentConfig.items[0]);
