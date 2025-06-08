@@ -58,6 +58,7 @@ const Pregunta = () => {
     searchTerm: '',
     showTestModal: true,
     showAreaModal: false,
+    showInfoModal: false,
     isLoading: false,
     activeTab: 'list'
   });
@@ -224,7 +225,7 @@ const Pregunta = () => {
         const data = await lastQuestionResponse.json();
         if (data.preguntas.length > 0) {
           setQuestionData(prev => ({ ...prev, id: String(data.preguntas[0].id) }));
-          setUiState(prev => ({ ...prev, showAreaModal: true }));
+          setUiState(prev => ({ ...prev, showInfoModal: true }));
         }
       }
 
@@ -239,6 +240,7 @@ const Pregunta = () => {
   };
 
   const handleDelete = async () => {
+    setUiState(prev => ({ ...prev, showConfirmModal: false }));
     if (!questionData.id) return;
     setUiState(prev => ({ ...prev, isLoading: true }));
     try {
@@ -885,12 +887,54 @@ const Pregunta = () => {
         </div>
       )}
 
+      {/* Info Modal */}
+      {uiState.showInfoModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-6 m-4">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl font-bold text-gray-800">
+                {isEnglish ? "Important Information" : "Información Importante"}
+              </h3>
+              <button
+                onClick={() => setUiState(prev => ({ ...prev, showInfoModal: false }))}
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+              >
+                <X size={20} className="text-gray-500" />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex items-start gap-3">
+                <AlertCircle size={24} className="text-blue-500 mt-1" />
+                <p className="text-gray-600">
+                  {isEnglish 
+                    ? "To ensure this question is counted in the results, you need to assign an area to it."
+                    : "Para que esta pregunta se contabilice en los resultados, debe asignarle un área."}
+                </p>
+              </div>
+
+              <div className="flex justify-end gap-4 mt-6">
+                <button
+                  onClick={() => setUiState(prev => ({ ...prev, showInfoModal: false }))}
+                  className="px-6 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors duration-200"
+                >
+                  {isEnglish ? "Perfect." : "Perfecto."}  
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Confirmation Modal */}
       {uiState.showConfirmModal && (
         <ConfirmationModal
           onConfirm={handleDelete}
           onCancel={() => setUiState(prev => ({ ...prev, showConfirmModal: false }))}
           idioma={idioma}
+          message={isEnglish 
+            ? "Are you sure you want to delete this question?"
+            : "¿Estás seguro de que deseas eliminar esta pregunta?"}
         />
       )}
 

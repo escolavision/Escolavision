@@ -244,6 +244,7 @@ const Intentos = () => {
   };
 
   const handleDelete = async () => {
+    setUiState(prev => ({ ...prev, showConfirmModal: false }));
     if (!attemptData.id) return;
     setUiState(prev => ({ ...prev, isLoading: true }));
     try {

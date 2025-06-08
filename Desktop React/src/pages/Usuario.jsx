@@ -188,6 +188,7 @@ const Usuario = () => {
   };
 
   const handleDelete = async () => {
+    setUiState(prev => ({ ...prev, showConfirmModal: false }));
     if (!userData.id) return;
     setUiState(prev => ({ ...prev, isLoading: true }));
     try {

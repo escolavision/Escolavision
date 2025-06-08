@@ -4,11 +4,11 @@
  */
 
 import React, { useEffect, useState } from "react";
-import { 
-  Plus, 
-  Save, 
-  Trash2, 
-  CheckCircle, 
+import {
+  Plus,
+  Save,
+  Trash2,
+  CheckCircle,
   Search,
   ChevronLeft,
   ChevronRight,
@@ -86,7 +86,7 @@ const Test = ({ logout }) => {
     try {
       const response = await fetch(`${API_BASE_URL}/leer.php?tabla=tests`);
       if (!response.ok) throw new Error(isEnglish ? "Error fetching tests" : "Error al cargar los tests");
-      
+
       const data = await response.json();
       setTests(Array.isArray(data.tests) ? data.tests : []);
     } catch (error) {
@@ -122,7 +122,7 @@ const Test = ({ logout }) => {
 
       showSuccess();
       handleNewTest();
-    fetchTests();
+      fetchTests();
     } catch (error) {
       showError(isEnglish ? "Error saving test" : "Error al guardar el test");
     } finally {
@@ -142,7 +142,7 @@ const Test = ({ logout }) => {
       if (!response.ok) {
         throw new Error(
           response.status === 503
-            ? isEnglish 
+            ? isEnglish
               ? "Cannot delete a test with associated questions"
               : "No se puede eliminar un test con preguntas asociadas"
             : isEnglish
@@ -155,7 +155,7 @@ const Test = ({ logout }) => {
       setTimeout(() => {
         setUiState(prev => ({ ...prev, isDeleting: false }));
       }, 1500);
-      
+
       handleNewTest();
       fetchTests();
     } catch (error) {
@@ -172,21 +172,21 @@ const Test = ({ logout }) => {
       const id_centro = localStorage.getItem('id_centro');
       const response = await fetch(`${API_BASE_URL}/leer.php?tabla=intentos&id_centro=${id_centro}`);
       if (!response.ok) throw new Error(isEnglish ? "Error fetching attempts" : "Error al cargar los intentos");
-      
+
       const data = await response.json();
       const attempts = Array.isArray(data.intentos) ? data.intentos : [];
 
       // Calculate statistics
       const totalAttempts = attempts.length;
-      
+
       // Calculate average score from all results
-      const allScores = attempts.flatMap(attempt => 
+      const allScores = attempts.flatMap(attempt =>
         attempt.resultados.split(';').map(score => parseFloat(score))
       );
-      const averageScore = allScores.length > 0 
+      const averageScore = allScores.length > 0
         ? (allScores.reduce((acc, curr) => acc + curr, 0) / allScores.length).toFixed(1)
         : 0;
-      
+
       // Count attempts per test
       const attemptsPerTest = attempts.reduce((acc, curr) => {
         acc[curr.idtest] = (acc[curr.idtest] || 0) + 1;
@@ -205,7 +205,7 @@ const Test = ({ logout }) => {
 
       // Calculate average score for each test
       const averageScoresPerTest = Object.entries(scoresPerTest).reduce((acc, [testId, scores]) => {
-        acc[testId] = scores.length > 0 
+        acc[testId] = scores.length > 0
           ? (scores.reduce((sum, score) => sum + score, 0) / scores.length).toFixed(1)
           : 0;
         return acc;
@@ -295,7 +295,7 @@ const Test = ({ logout }) => {
     }
   }, [tests]);
 
-  const filteredTests = tests.filter(test => 
+  const filteredTests = tests.filter(test =>
     test.nombretest.toLowerCase().includes(uiState.searchTerm.toLowerCase())
   );
 
@@ -340,8 +340,8 @@ const Test = ({ logout }) => {
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
             <h2 className="text-2xl font-bold text-gray-800">
               {isEnglish ? "Test Management" : "Gestión de Tests"}
-        </h2>
-            
+            </h2>
+
             <div className="flex items-center gap-4">
               {/* Search Bar */}
               <div className="relative">
@@ -363,28 +363,26 @@ const Test = ({ logout }) => {
                 <Plus size={20} />
                 <span>{isEnglish ? "New Test" : "Nuevo Test"}</span>
               </button>
-        </div>
-      </div>
+            </div>
+          </div>
 
           {/* Tabs */}
           <div className="flex gap-4 mb-6">
-        <button
+            <button
               onClick={() => setUiState(prev => ({ ...prev, activeTab: 'list' }))}
-              className={`px-4 py-2 rounded-lg transition-colors duration-200 ${
-                uiState.activeTab === 'list'
+              className={`px-4 py-2 rounded-lg transition-colors duration-200 ${uiState.activeTab === 'list'
                   ? 'bg-blue-500 text-white'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
+                }`}
             >
               {isEnglish ? "Tests List" : "Lista de Tests"}
-        </button>
-        <button
+            </button>
+            <button
               onClick={() => setUiState(prev => ({ ...prev, activeTab: 'stats' }))}
-              className={`px-4 py-2 rounded-lg transition-colors duration-200 ${
-                uiState.activeTab === 'stats'
+              className={`px-4 py-2 rounded-lg transition-colors duration-200 ${uiState.activeTab === 'stats'
                   ? 'bg-blue-500 text-white'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
+                }`}
             >
               {isEnglish ? "Statistics" : "Estadísticas"}
             </button>
@@ -405,7 +403,7 @@ const Test = ({ logout }) => {
                   <h3 className="text-xl font-semibold text-gray-800 mb-4">
                     {isEnglish ? "Tests" : "Tests"}
                   </h3>
-                  
+
                   <div className="space-y-2 max-h-[420px] overflow-y-auto pr-2 custom-scrollbar">
                     {filteredTests
                       .slice(currentPage * TESTS_PER_PAGE, (currentPage + 1) * TESTS_PER_PAGE)
@@ -421,13 +419,13 @@ const Test = ({ logout }) => {
                             isVisible: test.isVisible === 1 ? "sí" : "no"
                           })}
                           className={`p-4 rounded-lg cursor-pointer transition-all duration-200
-                            ${selectedTest.id === test.id 
-                              ? 'bg-blue-50 ring-2 ring-blue-500' 
+                            ${selectedTest.id === test.id
+                              ? 'bg-blue-50 ring-2 ring-blue-500'
                               : 'bg-gray-50 hover:bg-gray-100'}`}
                         >
                           <div className="flex items-center gap-3">
                             <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
-                              {test.isVisible === 1 
+                              {test.isVisible === 1
                                 ? <Eye size={20} className="text-gray-500" />
                                 : <EyeOff size={20} className="text-gray-500" />
                               }
@@ -478,7 +476,7 @@ const Test = ({ logout }) => {
                 {/* Test Form */}
                 <div className="lg:col-span-2 bg-white rounded-xl shadow-md p-6">
                   <h3 className="text-xl font-semibold text-gray-800 mb-6">
-                    {selectedTest.id 
+                    {selectedTest.id
                       ? (isEnglish ? "Edit Test" : "Editar Test")
                       : (isEnglish ? "New Test" : "Nuevo Test")}
                   </h3>
@@ -560,17 +558,17 @@ const Test = ({ logout }) => {
                             ? selectedTest.id ? "Update" : "Save"
                             : selectedTest.id ? "Actualizar" : "Guardar"}
                         </span>
-        </button>
+                      </button>
 
                       {selectedTest.id && (
-        <button
+                        <button
                           onClick={() => setUiState(prev => ({ ...prev, showConfirmModal: true }))}
                           disabled={uiState.isDeleting}
                           className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 transition-colors duration-200 disabled:bg-red-300 disabled:cursor-not-allowed"
                         >
                           <Trash2 size={20} />
                           <span>{isEnglish ? "Delete" : "Eliminar"}</span>
-        </button>
+                        </button>
                       )}
                     </div>
                   </div>
